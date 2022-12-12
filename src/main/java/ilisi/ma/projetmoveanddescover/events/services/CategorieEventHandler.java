@@ -1,14 +1,11 @@
-package events.services;
+package ilisi.ma.projetmoveanddescover.events.services;
 
-import events.repository.CategorieRepository;
-import events.repository.entities.BasicResponse;
-import events.repository.entities.Categorie;
-import events.repository.entities.Evenement;
+import ilisi.ma.projetmoveanddescover.events.repository.CategorieRepository;
+import ilisi.ma.projetmoveanddescover.events.repository.entities.Categorie;
 import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Transactional

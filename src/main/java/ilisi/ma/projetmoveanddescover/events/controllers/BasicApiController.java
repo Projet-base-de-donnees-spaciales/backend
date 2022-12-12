@@ -1,6 +1,7 @@
-package events.controllers;
+package ilisi.ma.projetmoveanddescover.events.controllers;
 
-import events.repository.entities.BasicResponse;
+
+import ilisi.ma.projetmoveanddescover.events.repository.entities.BasicResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

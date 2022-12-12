@@ -1,11 +1,9 @@
-package events.controllers;
+package ilisi.ma.projetmoveanddescover.events.controllers;
 
-import events.repository.entities.Categorie;
-import events.repository.entities.Evenement;
-import events.services.CategorieEventHandler;
-import events.services.CategorieResponse;
-import events.services.EvenementEventHandler;
-import events.services.EvenementResponse;
+
+import ilisi.ma.projetmoveanddescover.events.repository.entities.Categorie;
+import ilisi.ma.projetmoveanddescover.events.services.CategorieEventHandler;
+import ilisi.ma.projetmoveanddescover.events.services.CategorieResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package events.repository.entities;
+package ilisi.ma.projetmoveanddescover.events.repository.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

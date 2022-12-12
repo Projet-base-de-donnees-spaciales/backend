@@ -1,16 +1,15 @@
-package events.services;
+package ilisi.ma.projetmoveanddescover.events.services;
 
-import events.repository.CategorieRepository;
-import events.repository.EvenementRepository;
-import events.repository.PositionRepository;
-import events.repository.entities.Categorie;
-import events.repository.entities.Evenement;
-import events.repository.entities.Position;
+import ilisi.ma.projetmoveanddescover.events.repository.CategorieRepository;
+import ilisi.ma.projetmoveanddescover.events.repository.EvenementRepository;
+import ilisi.ma.projetmoveanddescover.events.repository.PositionRepository;
+import ilisi.ma.projetmoveanddescover.events.repository.entities.Categorie;
+import ilisi.ma.projetmoveanddescover.events.repository.entities.Evenement;
+import ilisi.ma.projetmoveanddescover.events.repository.entities.Position;
 import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service

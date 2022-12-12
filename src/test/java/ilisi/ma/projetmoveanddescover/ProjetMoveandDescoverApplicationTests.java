@@ -1,0 +1,13 @@
+package ilisi.ma.projetmoveanddescover;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class ProjetMoveandDescoverApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
