@@ -19,8 +19,7 @@ public class Categorie {
     private String name;
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER , mappedBy = "category")
-    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY , mappedBy = "category")
     private List<Evenement> listArticles = new ArrayList<>();
 
     public Long getId() {

@@ -1,10 +1,12 @@
 package ilisi.ma.projetmoveanddescover.events.controllers;
 
 
+import ilisi.ma.projetmoveanddescover.events.controllers.dto.CategoryDTO;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Categorie;
 import ilisi.ma.projetmoveanddescover.events.services.CategorieEventHandler;
 import ilisi.ma.projetmoveanddescover.events.services.CategorieResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,4 +49,12 @@ public class CategorieController extends BasicApiController {
         return Respond(categorieResponse);
 
     }
-}
+    @GetMapping("Category/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<CategorieResponse> getCateforyById(@PathVariable String id)
+        throws Exception {
+        CategorieResponse categorieResponse = categorieEventHandler.getCategoryById(id);
+        return Respond(categorieResponse);
+    }
+    }
+
