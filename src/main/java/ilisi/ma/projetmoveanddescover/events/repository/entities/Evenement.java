@@ -64,7 +64,7 @@ public class Evenement {
     }
 
     public void setDate_creation(Date date_creation) {
-        this.date_creation = date_creation;
+        this.date_creation = new Date();
     }
 
     public Date getDate_expiration() {

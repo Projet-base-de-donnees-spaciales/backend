@@ -24,11 +24,13 @@ public class EvenementEventHandler {
 
     public EvenementResponse creationEvent(Evenement evenement){
         EvenementResponse evenementResponse = new EvenementResponse();
-        Categorie categorie=categorieRepository.findById(evenement.getCategory().getId()).get();
+        Categorie categorie=evenement.getCategory()!=null?categorieRepository.findById(evenement.getCategory().getId()).get():null;
         evenement.setCategory(categorie);
-       Position position= positionRepository.save(evenement.getPosition());
-       evenement.setPosition(position);
-        evenementRepository.save(evenement);
+        Position position= positionRepository.save(evenement.getPosition());
+        evenement.setPosition(position);
+        Evenement eventTmp=evenementRepository.save(evenement);
+        position.setEvenement(eventTmp);
+        positionRepository.save(position);
         evenementResponse.Success("Evenement creer");
         return evenementResponse;
 
