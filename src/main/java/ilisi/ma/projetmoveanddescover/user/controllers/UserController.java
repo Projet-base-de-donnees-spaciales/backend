@@ -2,10 +2,12 @@ package ilisi.ma.projetmoveanddescover.user.controllers;
 
 import ilisi.ma.projetmoveanddescover.events.controllers.BasicApiController;
 import ilisi.ma.projetmoveanddescover.user.controllers.dto.CreatDTO;
+import ilisi.ma.projetmoveanddescover.user.controllers.dto.LoginDTO;
 import ilisi.ma.projetmoveanddescover.user.controllers.dto.UserDTO;
 import ilisi.ma.projetmoveanddescover.user.controllers.mappers.UserControllerMapper;
 import ilisi.ma.projetmoveanddescover.user.repository.entities.User;
 import ilisi.ma.projetmoveanddescover.user.services.UserEventHandler;
+import ilisi.ma.projetmoveanddescover.user.services.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,5 +61,17 @@ public class UserController extends BasicApiController {
     void deleteAthlete(@PathVariable String id) {
         log.info("delete user with id : " + id);
         this.userEventHandler.deleteUser(Long.parseLong(id));
+    }
+
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    ResponseEntity<?> liginUser(@RequestBody @Valid LoginDTO loginDTO){
+        log.info("login user"+loginDTO.email()+" password : "+loginDTO.password());
+        UserResponse userResponse =userEventHandler.login(loginDTO.email(),loginDTO.password());
+        if(userResponse.isSuccessful())
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userResponse.getUser().getId());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(userResponse.getMessage());
     }
 }

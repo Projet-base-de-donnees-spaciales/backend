@@ -42,6 +42,25 @@ public class UserEventHandler {
 
         return userRepository.findAll();
     }
+
+    public UserResponse login(String email, String password) {
+        User user=userRepository.findByEmail(email);
+        UserResponse userResponse= new UserResponse();
+        if(user != null){
+            //System.out.println(user.getPassword());
+            if(user.getPassword().equals(password)) {
+
+                userResponse.setUser(user);
+                userResponse.Success("User found with right password");
+
+            }else {
+                userResponse.Error("Password is wrong");
+            }
+
+        }
+        else userResponse.Error("User not found");
+        return userResponse;
+    }
 }
 
 

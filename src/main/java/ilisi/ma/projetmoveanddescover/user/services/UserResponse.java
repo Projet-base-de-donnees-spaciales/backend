@@ -7,5 +7,5 @@ import lombok.Data;
 import java.util.List;
 @Data
 public class UserResponse extends BasicResponse {
-    private List<User> users;
+    User user;
 }

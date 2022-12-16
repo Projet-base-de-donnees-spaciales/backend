@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,9 +15,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    String username;
+    @NotNull String username;
+    @NotNull
+    @Column(unique = true)
     String email;
-    String password;
+    @NotNull String password;
 
     public String getUsername() {
         return username;
