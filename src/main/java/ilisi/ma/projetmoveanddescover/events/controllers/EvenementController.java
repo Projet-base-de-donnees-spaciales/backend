@@ -4,6 +4,7 @@ package ilisi.ma.projetmoveanddescover.events.controllers;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Evenement;
 import ilisi.ma.projetmoveanddescover.events.services.EvenementEventHandler;
 import ilisi.ma.projetmoveanddescover.events.services.EvenementResponse;
+import ilisi.ma.projetmoveanddescover.events.services.PositionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class EvenementController extends BasicApiController {
     @Autowired
     EvenementEventHandler evenementEventHandler;
+
     @PostMapping({"/Evenement/Add"})
     public ResponseEntity<EvenementResponse>  AddEvenement(@RequestBody Evenement evenement)
             throws Exception {
@@ -31,10 +33,10 @@ public class EvenementController extends BasicApiController {
 
     }
     @GetMapping({"/Evenement/getAll"})
-    public ResponseEntity<EvenementResponse>  GetEvenement()
+    public ResponseEntity<PositionResponse>  GetEvenement()
             throws Exception {
 
-        EvenementResponse evenementResponse = evenementEventHandler.getAllEvent();
+        PositionResponse evenementResponse = evenementEventHandler.getAllEvent();
         return Respond(evenementResponse);
 
     }

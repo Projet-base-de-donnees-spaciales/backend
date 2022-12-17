@@ -1,5 +1,7 @@
 package ilisi.ma.projetmoveanddescover.events.services;
 
+import ilisi.ma.projetmoveanddescover.Common.Mapper.AutoMapper;
+import ilisi.ma.projetmoveanddescover.events.controllers.dto.CategoryDTO;
 import ilisi.ma.projetmoveanddescover.events.repository.CategorieRepository;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Categorie;
 import jakarta.transaction.Transactional;
@@ -7,11 +9,16 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Transactional
 public class CategorieEventHandler {
     @Autowired
     CategorieRepository categorieRepository;
+    @Autowired
+    AutoMapper _Mapper;
 
     public CategorieResponse creationCategorie(Categorie categorie){
         CategorieResponse categorieResponse=new CategorieResponse();
@@ -37,9 +44,23 @@ public class CategorieEventHandler {
     }
     public CategorieResponse getAllCategorie(){
         CategorieResponse categorieResponse = new CategorieResponse();
-        categorieResponse.setCategorieList(categorieRepository.findAll());
-        categorieResponse.Success("Evenement get");
+
+        categorieResponse.setCategorieList(_Mapper.MapList(categorieRepository.findAll(), CategoryDTO.class));
+
+        categorieResponse.Success("Categorie get");
         return categorieResponse;
+    }
+    public CategorieResponse getCategoryById(String id)
+    {
+       CategorieResponse categorieResponse = new  CategorieResponse();
+        List<Categorie> categories= new ArrayList<Categorie>();
+        Categorie categorie=categorieRepository.getById(Long.parseLong(id));
+        System.out.println("Category"+ categorie.getDescription());
+        categories.add(categorie);
+       categorieResponse.setCategorieList(_Mapper.MapList(categories, CategoryDTO.class));
+        System.out.println("success");
+       categorieResponse.Success("Get Categorie by id = "+id);
+       return categorieResponse;
     }
 
 }

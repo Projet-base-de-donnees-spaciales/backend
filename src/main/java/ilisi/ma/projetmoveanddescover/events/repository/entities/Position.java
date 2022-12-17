@@ -16,8 +16,8 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Point point;
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+
+    @OneToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     @JoinColumn(name = "evenement_id")
     private Evenement evenement;
 

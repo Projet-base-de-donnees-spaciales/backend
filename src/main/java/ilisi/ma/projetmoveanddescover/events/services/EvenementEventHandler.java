@@ -1,5 +1,7 @@
 package ilisi.ma.projetmoveanddescover.events.services;
 
+import ilisi.ma.projetmoveanddescover.Common.Mapper.AutoMapper;
+import ilisi.ma.projetmoveanddescover.events.controllers.dto.PositionDTO;
 import ilisi.ma.projetmoveanddescover.events.repository.CategorieRepository;
 import ilisi.ma.projetmoveanddescover.events.repository.EvenementRepository;
 import ilisi.ma.projetmoveanddescover.events.repository.PositionRepository;
@@ -11,6 +13,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 
 @Service
 @Transactional
@@ -18,17 +22,23 @@ public class EvenementEventHandler {
     @Autowired
     EvenementRepository evenementRepository;
     @Autowired
-    CategorieRepository categorieRepository;
-    @Autowired
     PositionRepository positionRepository;
+    @Autowired
+    CategorieRepository categorieRepository;
+
+    @Autowired
+    AutoMapper _Mapper;
 
     public EvenementResponse creationEvent(Evenement evenement){
         EvenementResponse evenementResponse = new EvenementResponse();
-        Categorie categorie=categorieRepository.findById(evenement.getCategory().getId()).get();
+        Categorie categorie=evenement.getCategory()!=null?categorieRepository.findById(evenement.getCategory().getId()).get():null;
         evenement.setCategory(categorie);
-       Position position= positionRepository.save(evenement.getPosition());
-       evenement.setPosition(position);
-        evenementRepository.save(evenement);
+        Position position= positionRepository.save(evenement.getPosition());
+        evenement.setPosition(position);
+        evenement.setDate_creation(new Date());
+        Evenement eventTmp=evenementRepository.save(evenement);
+        position.setEvenement(eventTmp);
+        positionRepository.save(position);
         evenementResponse.Success("Evenement creer");
         return evenementResponse;
 
@@ -55,9 +65,12 @@ public class EvenementEventHandler {
         evenementResponse.Success("Evenement supprimer");
         return evenementResponse;
     }
-    public EvenementResponse getAllEvent(){
-        EvenementResponse evenementResponse = new EvenementResponse();
-      evenementResponse.setEvenementList(evenementRepository.findAll());
+    public PositionResponse getAllEvent(){
+        PositionResponse evenementResponse = new PositionResponse();
+        evenementResponse.setPositionDTOSList(_Mapper.MapList(positionRepository.findAll(), PositionDTO.class));
+        System.out.println("*********************************/n");
+        System.out.println(positionRepository.findAll().toArray().length);
+        System.out.println("*********************************/n");
         evenementResponse.Success("Evenement get");
         return evenementResponse;
     }

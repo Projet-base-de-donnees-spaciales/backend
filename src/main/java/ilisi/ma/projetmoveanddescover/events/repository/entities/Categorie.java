@@ -1,5 +1,6 @@
 package ilisi.ma.projetmoveanddescover.events.repository.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,8 @@ public class Categorie {
     private Long id;
     private String name;
     private String description;
-    @OneToMany(fetch = FetchType.EAGER , mappedBy = "category")
+
+    @OneToMany(fetch = FetchType.LAZY , mappedBy = "category")
     private List<Evenement> listArticles = new ArrayList<>();
 
     public Long getId() {
