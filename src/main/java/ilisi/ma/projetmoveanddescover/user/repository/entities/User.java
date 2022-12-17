@@ -21,6 +21,15 @@ public class User {
     String email;
     @NotNull String password;
 
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    @NotNull int role;
     public String getUsername() {
         return username;
     }

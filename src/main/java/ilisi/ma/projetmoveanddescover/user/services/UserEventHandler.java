@@ -25,6 +25,7 @@ public class UserEventHandler {
         user1.setEmail(user.getEmail());
         user1.setPassword(user.getPassword());
         user1.setUsername(user.getUsername());
+        user1.setRole(user.getRole());
         userRepository.save(user1);
         UserResponse userResponse= new UserResponse();
         userResponse.Success("User changed successfully");

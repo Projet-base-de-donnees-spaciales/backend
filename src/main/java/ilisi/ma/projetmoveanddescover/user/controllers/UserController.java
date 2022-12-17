@@ -64,7 +64,6 @@ public class UserController extends BasicApiController {
     }
 
     @PostMapping("/login")
-    @ResponseStatus(HttpStatus.OK)
     ResponseEntity<?> liginUser(@RequestBody @Valid LoginDTO loginDTO){
         log.info("login user"+loginDTO.email()+" password : "+loginDTO.password());
         UserResponse userResponse =userEventHandler.login(loginDTO.email(),loginDTO.password());
