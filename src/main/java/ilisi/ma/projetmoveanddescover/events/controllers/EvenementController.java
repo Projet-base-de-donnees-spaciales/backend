@@ -1,11 +1,10 @@
 package ilisi.ma.projetmoveanddescover.events.controllers;
 
 
-import ilisi.ma.projetmoveanddescover.events.controllers.dto.EvenementDTO;
-import ilisi.ma.projetmoveanddescover.events.controllers.mappers.EventControllerMapper;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Evenement;
 import ilisi.ma.projetmoveanddescover.events.services.EvenementEventHandler;
 import ilisi.ma.projetmoveanddescover.events.services.EvenementResponse;
+import ilisi.ma.projetmoveanddescover.events.services.PositionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +15,13 @@ import org.springframework.web.bind.annotation.*;
 public class EvenementController extends BasicApiController {
     @Autowired
     EvenementEventHandler evenementEventHandler;
-    @Autowired
-    EventControllerMapper eventControllerMapper;
+
     @PostMapping({"/Evenement/Add"})
-    public void  AddEvenement(@RequestBody EvenementDTO evenement)
+    public ResponseEntity<EvenementResponse>  AddEvenement(@RequestBody Evenement evenement)
             throws Exception {
-        System.out.println(evenement);
-        System.out.println(eventControllerMapper.toEvent(evenement).getCategory().getId());
-        EvenementResponse evenementResponse = null;//evenementEventHandler.creationEvent();
-       //return Respond(evenementResponse);
+
+        EvenementResponse evenementResponse = evenementEventHandler.creationEvent(evenement);
+       return Respond(evenementResponse);
 
     }
     @PutMapping({"/Evenement/Update"})
@@ -36,10 +33,10 @@ public class EvenementController extends BasicApiController {
 
     }
     @GetMapping({"/Evenement/getAll"})
-    public ResponseEntity<EvenementResponse>  GetEvenement()
+    public ResponseEntity<PositionResponse>  GetEvenement()
             throws Exception {
 
-        EvenementResponse evenementResponse = evenementEventHandler.getAllEvent();
+        PositionResponse evenementResponse = evenementEventHandler.getAllEvent();
         return Respond(evenementResponse);
 
     }

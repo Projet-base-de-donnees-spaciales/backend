@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDTO{
-        Long id;
-        String name;
-        String description;
-
+public class UserDTO {
+    int id;
+    String username;
+    String email;
+    String password;
 }

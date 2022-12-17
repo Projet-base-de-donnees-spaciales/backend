@@ -1,5 +1,6 @@
 package ilisi.ma.projetmoveanddescover.events.repository.entities;
 
+import ilisi.ma.projetmoveanddescover.user.repository.entities.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -24,8 +25,12 @@ public class Evenement {
     @JoinColumn(name = "category_id")
     private Categorie category;
     @OneToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    @JoinColumn(name = "positon_id",nullable = false)
+    @JoinColumn(name = "position_id",nullable = false)
     private Position position;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Long getId() {
         return id;
@@ -89,5 +94,13 @@ public class Evenement {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
