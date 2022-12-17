@@ -4,7 +4,8 @@ public record UserDTO(
         int id,
         String username,
         String email,
-        String password
+        String password,
+        int role
 
 ) {
 }

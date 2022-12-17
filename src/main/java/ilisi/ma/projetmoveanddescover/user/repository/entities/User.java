@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+
+import javax.validation.constraints.NotNull;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,12 +20,32 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    String username;
+    @NotNull String username;
+    @NotNull
+    @Column(unique = true)
     String email;
-    String password;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user",cascade = CascadeType.ALL)
-    private Set<Evenement> reservations = new HashSet<Evenement>();
+    @NotNull String password;
 
+    public Set<Evenement> getEvenements() {
+        return evenements;
+    }
+
+    public void setEvenements(Set<Evenement> evenements) {
+        this.evenements = evenements;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user",cascade = CascadeType.ALL)
+    private Set<Evenement> evenements = new HashSet<Evenement>();
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    @NotNull int role;
     public String getUsername() {
         return username;
     }

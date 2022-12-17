@@ -25,6 +25,7 @@ public class UserEventHandler {
         user1.setEmail(user.getEmail());
         user1.setPassword(user.getPassword());
         user1.setUsername(user.getUsername());
+        user1.setRole(user.getRole());
         userRepository.save(user1);
         UserResponse userResponse= new UserResponse();
         userResponse.Success("User changed successfully");
@@ -41,6 +42,25 @@ public class UserEventHandler {
     public List<User> getAllUsers(){
 
         return userRepository.findAll();
+    }
+
+    public UserResponse login(String email, String password) {
+        User user=userRepository.findByEmail(email);
+        UserResponse userResponse= new UserResponse();
+        if(user != null){
+            //System.out.println(user.getPassword());
+            if(user.getPassword().equals(password)) {
+
+                userResponse.setUser(user);
+                userResponse.Success("User found with right password");
+
+            }else {
+                userResponse.Error("Password is wrong");
+            }
+
+        }
+        else userResponse.Error("User not found");
+        return userResponse;
     }
 }
 
