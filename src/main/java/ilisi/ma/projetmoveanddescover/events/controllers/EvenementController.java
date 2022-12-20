@@ -1,6 +1,7 @@
 package ilisi.ma.projetmoveanddescover.events.controllers;
 
 
+import ilisi.ma.projetmoveanddescover.events.controllers.Common.EvenementCommon;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Evenement;
 import ilisi.ma.projetmoveanddescover.events.services.EvenementEventHandler;
 import ilisi.ma.projetmoveanddescover.events.services.EvenementResponse;
@@ -17,7 +18,7 @@ public class EvenementController extends BasicApiController {
     EvenementEventHandler evenementEventHandler;
 
     @PostMapping({"/Evenement/Add"})
-    public ResponseEntity<EvenementResponse>  AddEvenement(@RequestBody Evenement evenement)
+    public ResponseEntity<EvenementResponse>  AddEvenement(@RequestBody EvenementCommon evenement)
             throws Exception {
 
         EvenementResponse evenementResponse = evenementEventHandler.creationEvent(evenement);
