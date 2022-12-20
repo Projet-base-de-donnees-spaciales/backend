@@ -20,8 +20,8 @@ public class PositionDTO {
         this.id = id;
     }
 
-    public int getPoint() {
-        return point.getNumPoints();
+    public String getPoint() {
+        return point.toString();
     }
 
     public void setPoint(Point point) {

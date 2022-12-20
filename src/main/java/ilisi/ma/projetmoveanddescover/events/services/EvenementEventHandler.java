@@ -1,6 +1,7 @@
 package ilisi.ma.projetmoveanddescover.events.services;
 
 import ilisi.ma.projetmoveanddescover.Common.Mapper.AutoMapper;
+import ilisi.ma.projetmoveanddescover.events.controllers.Common.EvenementCommon;
 import ilisi.ma.projetmoveanddescover.events.controllers.dto.PositionDTO;
 import ilisi.ma.projetmoveanddescover.events.repository.CategorieRepository;
 import ilisi.ma.projetmoveanddescover.events.repository.EvenementRepository;
@@ -10,6 +11,7 @@ import ilisi.ma.projetmoveanddescover.events.repository.entities.Evenement;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Position;
 import jakarta.transaction.Transactional;
 
+import org.locationtech.jts.io.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +31,13 @@ public class EvenementEventHandler {
     @Autowired
     AutoMapper _Mapper;
 
-    public EvenementResponse creationEvent(Evenement evenement){
+    public EvenementResponse creationEvent(EvenementCommon evenementCommon) throws ParseException {
+        Evenement evenement=evenementCommon.toEvenement();
         EvenementResponse evenementResponse = new EvenementResponse();
         Categorie categorie=evenement.getCategory()!=null?categorieRepository.findById(evenement.getCategory().getId()).get():null;
         evenement.setCategory(categorie);
         Position position= positionRepository.save(evenement.getPosition());
         evenement.setPosition(position);
-        evenement.setDate_creation(new Date());
         Evenement eventTmp=evenementRepository.save(evenement);
         position.setEvenement(eventTmp);
         positionRepository.save(position);
@@ -68,9 +70,6 @@ public class EvenementEventHandler {
     public PositionResponse getAllEvent(){
         PositionResponse evenementResponse = new PositionResponse();
         evenementResponse.setPositionDTOSList(_Mapper.MapList(positionRepository.findAll(), PositionDTO.class));
-        System.out.println("*********************************/n");
-        System.out.println(positionRepository.findAll().toArray().length);
-        System.out.println("*********************************/n");
         evenementResponse.Success("Evenement get");
         return evenementResponse;
     }

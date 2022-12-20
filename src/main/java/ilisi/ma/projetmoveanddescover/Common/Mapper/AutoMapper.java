@@ -61,6 +61,7 @@ public class AutoMapper
         mapper.typeMap(Evenement.class, EvenementDTO.class)
                 .addMappings(mapper-> mapper.map(Evenement::getCategory,EvenementDTO::setCategoryDTO))
                 .addMappings(mapper-> mapper.map(Evenement::getUser,EvenementDTO::setUserDTO));
+
     }
 
     private void MapPositionDTO()
