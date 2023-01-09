@@ -11,7 +11,9 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @Data
 
@@ -19,22 +21,27 @@ public class EvenementCommon {
     private String Description;
     private String name;
     private String Url_image;
-    private Date date_expiration;
+    private String date_expiration;
     private Categorie category;
     private String point;
     private Position position;
     private User user;
-    public Evenement toEvenement() throws ParseException {
+    public Evenement toEvenement() throws ParseException, java.text.ParseException {
         Evenement evenement=new Evenement();
         evenement.setDate_creation(new Date());
         evenement.setCategory(this.getCategory());
         Position pos=new Position();
+        //serialisation
         pos.setPoint((Point) new WKTReader().read(this.getPoint()));
         evenement.setPosition(pos);
         evenement.setName(this.getName());
         evenement.setUrl_image(this.getUrl_image());
-        evenement.setDate_expiration(this.getDate_expiration());
-        evenement.setUser(this.getUser());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = formatter.parse(this.getDate_expiration());
+        evenement.setDate_expiration(date);
+        User u=new User();
+        u.setId(1L);
+        evenement.setUser(u);
         evenement.setDescription(this.getDescription());
         return  evenement;
     }

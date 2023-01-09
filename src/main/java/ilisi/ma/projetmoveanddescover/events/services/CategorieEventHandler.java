@@ -36,11 +36,19 @@ public class CategorieEventHandler {
         categorieResponse.Success("Categorie modifier");
         return categorieResponse;
     }
-    public CategorieResponse deleteCategorie(Categorie categorie){
+    public CategorieResponse deleteCategorie(Long id){
         CategorieResponse categorieResponse=new CategorieResponse();
-        categorieRepository.deleteById(categorie.getId());
-        categorieResponse.Success("Categorie modifier");
-        return categorieResponse;
+        Categorie categorie=categorieRepository.findById(id).get();
+        if(categorie.getListArticles().size()!=0){
+            categorieResponse.Error("Categorie Can't be deleted");
+            return categorieResponse;
+        }
+        else{
+            categorieRepository.deleteById(id);
+            categorieResponse.Success("Categorie deleted successfuly");
+            return categorieResponse;
+        }
+
     }
     public CategorieResponse getAllCategorie(){
         CategorieResponse categorieResponse = new CategorieResponse();
