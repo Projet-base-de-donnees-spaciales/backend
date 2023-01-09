@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin()
 @RequestMapping("")
 public class CategorieController extends BasicApiController {
     @Autowired
@@ -41,11 +41,11 @@ public class CategorieController extends BasicApiController {
         return Respond(categorieResponse);
 
     }
-    @DeleteMapping ({"/Category/Delete"})
-    public ResponseEntity<CategorieResponse>  DeleteCategory(@RequestBody Categorie categorie)
+    @DeleteMapping ({"/Category/Delete/{id}"})
+    public ResponseEntity<CategorieResponse>  DeleteCategory(@PathVariable Long id)
             throws Exception {
 
-        CategorieResponse categorieResponse = categorieEventHandler.getAllCategorie();
+        CategorieResponse categorieResponse = categorieEventHandler.deleteCategorie(id);
         return Respond(categorieResponse);
 
     }

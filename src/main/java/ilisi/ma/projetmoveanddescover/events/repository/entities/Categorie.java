@@ -19,6 +19,7 @@ public class Categorie {
     private String name;
     private String description;
 
+
     @OneToMany(fetch = FetchType.LAZY , mappedBy = "category")
     private List<Evenement> listArticles = new ArrayList<>();
 

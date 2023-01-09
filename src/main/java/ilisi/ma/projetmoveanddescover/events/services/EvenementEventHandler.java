@@ -31,10 +31,10 @@ public class EvenementEventHandler {
     @Autowired
     AutoMapper _Mapper;
 
-    public EvenementResponse creationEvent(EvenementCommon evenementCommon) throws ParseException {
+    public EvenementResponse creationEvent(EvenementCommon evenementCommon) throws ParseException, java.text.ParseException {
         Evenement evenement=evenementCommon.toEvenement();
         EvenementResponse evenementResponse = new EvenementResponse();
-        Categorie categorie=evenement.getCategory()!=null?categorieRepository.findById(evenement.getCategory().getId()).get():null;
+        Categorie categorie=evenement.getCategory()!=null?categorieRepository.findByName(evenement.getCategory().getName()):null;
         evenement.setCategory(categorie);
         Position position= positionRepository.save(evenement.getPosition());
         evenement.setPosition(position);
