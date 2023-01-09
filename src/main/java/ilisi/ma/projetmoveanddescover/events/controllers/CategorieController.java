@@ -1,6 +1,4 @@
 package ilisi.ma.projetmoveanddescover.events.controllers;
-
-
 import ilisi.ma.projetmoveanddescover.events.controllers.dto.CategoryDTO;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Categorie;
 import ilisi.ma.projetmoveanddescover.events.services.CategorieEventHandler;
@@ -11,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins ="*" )
 @RequestMapping("")
 public class CategorieController extends BasicApiController {
     @Autowired
