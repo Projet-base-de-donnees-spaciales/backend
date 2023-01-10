@@ -41,11 +41,11 @@ public class EvenementController extends BasicApiController {
         return Respond(evenementResponse);
 
     }
-    @DeleteMapping ({"/Evenement/Delete"})
-    public ResponseEntity<EvenementResponse>  DeleteEvenement(@RequestBody Evenement evenement)
+    @DeleteMapping ({"/Evenement/Delete/{id}"})
+    public ResponseEntity<EvenementResponse>  DeleteEvenement(@PathVariable Long id)
             throws Exception {
 
-        EvenementResponse evenementResponse = evenementEventHandler.deleteEvent(evenement);
+        EvenementResponse evenementResponse = evenementEventHandler.deleteEvent(id);
         return Respond(evenementResponse);
 
     }

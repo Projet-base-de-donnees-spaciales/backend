@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import org.locationtech.jts.io.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
 
@@ -37,10 +38,11 @@ public class EvenementEventHandler {
         Categorie categorie=evenement.getCategory()!=null?categorieRepository.findByName(evenement.getCategory().getName()):null;
         evenement.setCategory(categorie);
         Position position= positionRepository.save(evenement.getPosition());
-        evenement.setPosition(position);
+       // evenement.setPosition(position);
         Evenement eventTmp=evenementRepository.save(evenement);
         position.setEvenement(eventTmp);
         positionRepository.save(position);
+        eventTmp.setPosition(null);
         evenementResponse.Success("Evenement creer");
         return evenementResponse;
 
@@ -50,9 +52,8 @@ public class EvenementEventHandler {
         Evenement evenement1=evenementRepository.findById(evenement.getId()).get();
         evenement1.setName(evenement.getName());
         evenement1.setDescription(evenement.getDescription());
-        evenement1.setUrl_image(evenement.getUrl_image());
-        evenement1.setCategory(evenement.getCategory());
-        evenement1.setDate_creation(evenement.getDate_creation());
+        Categorie categorie=evenement.getCategory()!=null?categorieRepository.findByName(evenement.getCategory().getName()):null;
+        evenement1.setCategory(categorie);
         evenement1.setDate_expiration(evenement.getDate_expiration());
         Position position=positionRepository.findById(evenement.getPosition().getId()).get();
         position.setPoint(evenement.getPosition().getPoint());
@@ -61,9 +62,11 @@ public class EvenementEventHandler {
         evenementResponse.Success("Evenement modifier");
         return evenementResponse;
     }
-    public EvenementResponse deleteEvent(Evenement evenement){
+    public EvenementResponse deleteEvent( Long id){
         EvenementResponse evenementResponse = new EvenementResponse();
-        evenementRepository.deleteById(evenement.getId());
+        Evenement evenement=evenementRepository.findById(id).get();
+        positionRepository.deleteByEvenement(evenement);
+        evenementRepository.deleteById(id);
         evenementResponse.Success("Evenement supprimer");
         return evenementResponse;
     }
