@@ -3,6 +3,7 @@ package ilisi.ma.projetmoveanddescover.events.controllers;
 
 import ilisi.ma.projetmoveanddescover.events.controllers.Common.EvenementCommon;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Evenement;
+import ilisi.ma.projetmoveanddescover.events.repository.entities.EvenementCommand;
 import ilisi.ma.projetmoveanddescover.events.services.EvenementEventHandler;
 import ilisi.ma.projetmoveanddescover.events.services.EvenementResponse;
 import ilisi.ma.projetmoveanddescover.events.services.PositionResponse;
@@ -26,7 +27,7 @@ public class EvenementController extends BasicApiController {
 
     }
     @PutMapping({"/Evenement/Update"})
-    public ResponseEntity<EvenementResponse>  UpdateEvenement(@RequestBody Evenement evenement)
+    public ResponseEntity<EvenementResponse>  UpdateEvenement(@RequestBody EvenementCommand evenement)
             throws Exception {
 
         EvenementResponse evenementResponse = evenementEventHandler.modifierEvent(evenement);
