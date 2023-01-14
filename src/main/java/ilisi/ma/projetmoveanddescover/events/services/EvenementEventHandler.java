@@ -38,11 +38,11 @@ public class EvenementEventHandler {
         Categorie categorie=evenement.getCategory()!=null?categorieRepository.findByName(evenement.getCategory().getName()):null;
         evenement.setCategory(categorie);
         Position position= positionRepository.save(evenement.getPosition());
-       // evenement.setPosition(position);
+        evenement.setPosition(position);
         Evenement eventTmp=evenementRepository.save(evenement);
         position.setEvenement(eventTmp);
         positionRepository.save(position);
-        eventTmp.setPosition(null);
+        eventTmp.setPosition(position);
         evenementResponse.Success("Evenement creer");
         return evenementResponse;
 
@@ -65,6 +65,7 @@ public class EvenementEventHandler {
     public EvenementResponse deleteEvent( Long id){
         EvenementResponse evenementResponse = new EvenementResponse();
         Evenement evenement=evenementRepository.findById(id).get();
+        evenement.setPosition(null);
         positionRepository.deleteByEvenement(evenement);
         evenementRepository.deleteById(id);
         evenementResponse.Success("Evenement supprimer");
