@@ -40,7 +40,7 @@ public class EvenementCommon {
         Date date = formatter.parse(this.getDate_expiration());
         evenement.setDate_expiration(date);
         User u=new User();
-        u.setId(1L);
+        u.setId(this.getUser().getId());
         evenement.setUser(u);
         evenement.setDescription(this.getDescription());
         return  evenement;

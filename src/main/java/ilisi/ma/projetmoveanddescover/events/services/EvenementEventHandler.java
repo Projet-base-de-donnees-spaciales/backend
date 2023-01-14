@@ -10,6 +10,8 @@ import ilisi.ma.projetmoveanddescover.events.repository.entities.Categorie;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Evenement;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.EvenementCommand;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Position;
+import ilisi.ma.projetmoveanddescover.user.repository.UserRepository;
+import ilisi.ma.projetmoveanddescover.user.repository.entities.User;
 import jakarta.transaction.Transactional;
 
 import org.locationtech.jts.geom.Point;
@@ -33,6 +35,8 @@ public class EvenementEventHandler {
     PositionRepository positionRepository;
     @Autowired
     CategorieRepository categorieRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     AutoMapper _Mapper;
@@ -86,4 +90,11 @@ public class EvenementEventHandler {
         return evenementResponse;
     }
 
+    public PositionResponse getAllEventUser(Long id) {
+       PositionResponse positionResponse=new PositionResponse();
+       User user=userRepository.findById(id).get();
+       positionResponse.setPositionDTOSList(_Mapper.MapList(positionRepository.findByEvenement_User(user), PositionDTO.class));
+       positionResponse.Success("les evenemet du user ");
+       return  positionResponse;
+    }
 }

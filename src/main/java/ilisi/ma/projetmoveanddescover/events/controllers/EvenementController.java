@@ -50,4 +50,13 @@ public class EvenementController extends BasicApiController {
         return Respond(evenementResponse);
 
     }
+
+    @GetMapping({"/Evenement/User/getAll/{id}"})
+    public ResponseEntity<PositionResponse>  GetEvenementUser(@PathVariable Long id)
+            throws Exception {
+
+        PositionResponse evenementResponse = evenementEventHandler.getAllEventUser(id);
+        return Respond(evenementResponse);
+
+    }
 }

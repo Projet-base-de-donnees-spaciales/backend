@@ -1,5 +1,6 @@
 package ilisi.ma.projetmoveanddescover.user.services;
 
+import ilisi.ma.projetmoveanddescover.user.controllers.dto.UserDTO;
 import ilisi.ma.projetmoveanddescover.user.repository.UserRepository;
 import ilisi.ma.projetmoveanddescover.user.repository.entities.User;
 import jakarta.transaction.Transactional;
@@ -50,8 +51,8 @@ public class UserEventHandler {
         if(user != null){
             //System.out.println(user.getPassword());
             if(user.getPassword().equals(password)) {
-
-                userResponse.setUser(user);
+                UserDTO userDTO=new UserDTO(Math.toIntExact(user.getId()),user.getUsername(),user.getEmail(),user.getPassword(),user.getRole());
+                userResponse.setUser(userDTO);
                 userResponse.Success("User found with right password");
 
             }else {

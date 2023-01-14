@@ -67,10 +67,7 @@ public class UserController extends BasicApiController {
     ResponseEntity<?> liginUser(@RequestBody @Valid LoginDTO loginDTO){
         log.info("login user"+loginDTO.email()+" password : "+loginDTO.password());
         UserResponse userResponse =userEventHandler.login(loginDTO.email(),loginDTO.password());
-        if(userResponse.isSuccessful())
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(userResponse.getUser().getId());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(userResponse.getMessage());
+       return Respond(userResponse);
+
     }
 }
