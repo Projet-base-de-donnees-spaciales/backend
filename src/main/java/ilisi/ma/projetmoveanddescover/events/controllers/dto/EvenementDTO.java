@@ -1,6 +1,7 @@
 package ilisi.ma.projetmoveanddescover.events.controllers.dto;
 
 
+import ilisi.ma.projetmoveanddescover.user.repository.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class EvenementDTO {
         Date date_creation;
         Date date_expiration;
         CategoryDTO categoryDTO;
-        UserDTO userDTO;
+        User userDTO;
 
 
 }
