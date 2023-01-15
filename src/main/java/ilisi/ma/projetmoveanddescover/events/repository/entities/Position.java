@@ -17,7 +17,7 @@ public class Position {
     private Long id;
     private Point point;
 
-    @OneToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    @OneToOne()
     @JoinColumn(name = "evenement_id")
     private Evenement evenement;
 

@@ -8,14 +8,22 @@ import ilisi.ma.projetmoveanddescover.events.repository.EvenementRepository;
 import ilisi.ma.projetmoveanddescover.events.repository.PositionRepository;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Categorie;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Evenement;
+import ilisi.ma.projetmoveanddescover.events.repository.entities.EvenementCommand;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Position;
+import ilisi.ma.projetmoveanddescover.user.repository.UserRepository;
+import ilisi.ma.projetmoveanddescover.user.repository.entities.User;
 import jakarta.transaction.Transactional;
 
+import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.io.ParseException;
+import org.locationtech.jts.io.WKTReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 @Service
@@ -27,6 +35,8 @@ public class EvenementEventHandler {
     PositionRepository positionRepository;
     @Autowired
     CategorieRepository categorieRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     AutoMapper _Mapper;
@@ -41,29 +51,35 @@ public class EvenementEventHandler {
         Evenement eventTmp=evenementRepository.save(evenement);
         position.setEvenement(eventTmp);
         positionRepository.save(position);
+        eventTmp.setPosition(position);
         evenementResponse.Success("Evenement creer");
         return evenementResponse;
 
     }
-    public EvenementResponse modifierEvent(Evenement evenement){
+    public EvenementResponse modifierEvent(EvenementCommand evenement) throws java.text.ParseException, ParseException {
         EvenementResponse evenementResponse = new EvenementResponse();
-        Evenement evenement1=evenementRepository.findById(evenement.getId()).get();
+        Evenement evenement1=evenementRepository.findById((long) evenement.getId()).get();
         evenement1.setName(evenement.getName());
         evenement1.setDescription(evenement.getDescription());
-        evenement1.setUrl_image(evenement.getUrl_image());
-        evenement1.setCategory(evenement.getCategory());
-        evenement1.setDate_creation(evenement.getDate_creation());
-        evenement1.setDate_expiration(evenement.getDate_expiration());
-        Position position=positionRepository.findById(evenement.getPosition().getId()).get();
-        position.setPoint(evenement.getPosition().getPoint());
+        Categorie categorie=evenement.getCategory()!=null?categorieRepository.findByName(evenement.getCategory().getName()):null;
+        evenement1.setCategory(categorie);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = formatter.parse(evenement.getDate_expiration());
+        evenement1.setDate_expiration(date);
+        Position position=positionRepository.findById((long) evenement.getIdPoint()).get();
+        position.setPoint((Point) new WKTReader().read(evenement.getPoint()));
+        evenement1.setPosition(position);
         positionRepository.save(position);
         evenementRepository.save(evenement1);
         evenementResponse.Success("Evenement modifier");
         return evenementResponse;
     }
-    public EvenementResponse deleteEvent(Evenement evenement){
+    public EvenementResponse deleteEvent( Long id){
         EvenementResponse evenementResponse = new EvenementResponse();
-        evenementRepository.deleteById(evenement.getId());
+        Evenement evenement=evenementRepository.findById(id).get();
+        evenement.setPosition(null);
+        positionRepository.deleteByEvenement(evenement);
+        evenementRepository.deleteById(id);
         evenementResponse.Success("Evenement supprimer");
         return evenementResponse;
     }
@@ -74,4 +90,11 @@ public class EvenementEventHandler {
         return evenementResponse;
     }
 
+    public PositionResponse getAllEventUser(Long id) {
+       PositionResponse positionResponse=new PositionResponse();
+       User user=userRepository.findById(id).get();
+       positionResponse.setPositionDTOSList(_Mapper.MapList(positionRepository.findByEvenement_User(user), PositionDTO.class));
+       positionResponse.Success("les evenemet du user ");
+       return  positionResponse;
+    }
 }

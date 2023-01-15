@@ -4,6 +4,7 @@ import ilisi.ma.projetmoveanddescover.user.repository.entities.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import java.util.Date;
 
@@ -24,8 +25,8 @@ public class Evenement {
     @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Categorie category;
-    @OneToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    @JoinColumn(name = "position_id",nullable = false)
+    @OneToOne( cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JoinColumn(name = "position_id")
     private Position position;
 
     @ManyToOne
@@ -102,5 +103,20 @@ public class Evenement {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Evenement{" +
+                "id=" + id +
+                ", Description='" + Description + '\'' +
+                ", name='" + name + '\'' +
+                ", Url_image='" + Url_image + '\'' +
+                ", date_creation=" + date_creation +
+                ", date_expiration=" + date_expiration +
+                ", category=" + category +
+                ", position=" + position.getId() +
+                ", user=" + user +
+                '}';
     }
 }

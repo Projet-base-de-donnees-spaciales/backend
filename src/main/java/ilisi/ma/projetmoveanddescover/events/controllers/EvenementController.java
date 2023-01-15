@@ -3,6 +3,7 @@ package ilisi.ma.projetmoveanddescover.events.controllers;
 
 import ilisi.ma.projetmoveanddescover.events.controllers.Common.EvenementCommon;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Evenement;
+import ilisi.ma.projetmoveanddescover.events.repository.entities.EvenementCommand;
 import ilisi.ma.projetmoveanddescover.events.services.EvenementEventHandler;
 import ilisi.ma.projetmoveanddescover.events.services.EvenementResponse;
 import ilisi.ma.projetmoveanddescover.events.services.PositionResponse;
@@ -26,7 +27,7 @@ public class EvenementController extends BasicApiController {
 
     }
     @PutMapping({"/Evenement/Update"})
-    public ResponseEntity<EvenementResponse>  UpdateEvenement(@RequestBody Evenement evenement)
+    public ResponseEntity<EvenementResponse>  UpdateEvenement(@RequestBody EvenementCommand evenement)
             throws Exception {
 
         EvenementResponse evenementResponse = evenementEventHandler.modifierEvent(evenement);
@@ -41,11 +42,20 @@ public class EvenementController extends BasicApiController {
         return Respond(evenementResponse);
 
     }
-    @DeleteMapping ({"/Evenement/Delete"})
-    public ResponseEntity<EvenementResponse>  DeleteEvenement(@RequestBody Evenement evenement)
+    @DeleteMapping ({"/Evenement/Delete/{id}"})
+    public ResponseEntity<EvenementResponse>  DeleteEvenement(@PathVariable Long id)
             throws Exception {
 
-        EvenementResponse evenementResponse = evenementEventHandler.deleteEvent(evenement);
+        EvenementResponse evenementResponse = evenementEventHandler.deleteEvent(id);
+        return Respond(evenementResponse);
+
+    }
+
+    @GetMapping({"/Evenement/User/getAll/{id}"})
+    public ResponseEntity<PositionResponse>  GetEvenementUser(@PathVariable Long id)
+            throws Exception {
+
+        PositionResponse evenementResponse = evenementEventHandler.getAllEventUser(id);
         return Respond(evenementResponse);
 
     }
