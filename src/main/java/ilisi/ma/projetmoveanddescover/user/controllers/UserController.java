@@ -30,18 +30,16 @@ public class UserController extends BasicApiController {
 
     @GetMapping("")
     ResponseEntity<?> getUsers() throws Exception{
-        ArrayList<UserDTO> usersdto= new ArrayList<UserDTO>();
+        //ArrayList<UserDTO> usersdto= new ArrayList<UserDTO>();
         Collection<User> users = userEventHandler.getAllUsers();
-        for(User user : users)
-            usersdto.add(userControllerMapper.toUserDTO(user));
-        return ResponseEntity.status(HttpStatus.OK).body(usersdto);
+         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
     
     @PostMapping("/Add")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<?> createUser(@RequestBody @Valid CreatDTO creatDTO){
+    ResponseEntity<?> createUser(@RequestBody @Valid User user){
         log.info("create new user");
-        User user =userControllerMapper.toCreatUserDTO(creatDTO);
+        //User user =userControllerMapper.toCreatUserDTO(creatDTO);
         userEventHandler.creationUser(user);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(user.getId());

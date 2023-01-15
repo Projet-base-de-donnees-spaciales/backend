@@ -1,7 +1,12 @@
 package ilisi.ma.projetmoveanddescover.user.services;
 
+
 import ilisi.ma.projetmoveanddescover.user.controllers.dto.UserDTO;
+
+import ilisi.ma.projetmoveanddescover.user.repository.RoleRepository;
+
 import ilisi.ma.projetmoveanddescover.user.repository.UserRepository;
+import ilisi.ma.projetmoveanddescover.user.repository.entities.Role;
 import ilisi.ma.projetmoveanddescover.user.repository.entities.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +19,12 @@ import java.util.List;
 public class UserEventHandler {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    RoleRepository roleRepository;
     public UserResponse creationUser(User user){
         //UserResponse userResponse = new UserResponse();
+        Role role = roleRepository.findById(user.getRole().getId()).get();
+        user.setRole(role);
         userRepository.save(user);
         UserResponse userResponse= new UserResponse();
         userResponse.Success("User created successfully");
@@ -26,7 +35,8 @@ public class UserEventHandler {
         user1.setEmail(user.getEmail());
         user1.setPassword(user.getPassword());
         user1.setUsername(user.getUsername());
-        user1.setRole(user.getRole());
+        Role role = roleRepository.findById(user.getRole().getId()).get();
+        user1.setRole(role);
         userRepository.save(user1);
         UserResponse userResponse= new UserResponse();
         userResponse.Success("User changed successfully");

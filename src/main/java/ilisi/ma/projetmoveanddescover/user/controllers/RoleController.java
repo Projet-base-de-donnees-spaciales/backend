@@ -32,11 +32,10 @@ public class RoleController {
     UserControllerMapper userControllerMapper;
     @GetMapping("")
     ResponseEntity<?> getUsers() throws Exception{
-        ArrayList<RoleDTO> roleDTOS= new ArrayList<RoleDTO>();
+        //ArrayList<RoleDTO> roleDTOS= new ArrayList<RoleDTO>();
         Collection<Role> roles = roleEventHandler.getAllRoles();
-        for(Role role : roles)
-            roleDTOS.add(userControllerMapper.toRoleDTO(role));
-        return ResponseEntity.status(HttpStatus.OK).body(roleDTOS);
+
+        return ResponseEntity.status(HttpStatus.OK).body(roles);
     }
     @GetMapping("/{id}")
     ResponseEntity<?> getRoleById(@PathVariable String id){

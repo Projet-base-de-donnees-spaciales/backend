@@ -1,6 +1,4 @@
 package ilisi.ma.projetmoveanddescover.events.controllers;
-
-
 import ilisi.ma.projetmoveanddescover.events.controllers.dto.CategoryDTO;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Categorie;
 import ilisi.ma.projetmoveanddescover.events.services.CategorieEventHandler;
