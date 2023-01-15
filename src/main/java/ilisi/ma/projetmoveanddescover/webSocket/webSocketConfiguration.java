@@ -19,6 +19,7 @@ public class webSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/sgbds-endpoint")
+                .setAllowedOriginPatterns("*")
                 .withSockJS();
     }
 

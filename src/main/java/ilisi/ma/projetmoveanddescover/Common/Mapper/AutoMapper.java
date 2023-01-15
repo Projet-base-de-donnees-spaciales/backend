@@ -77,7 +77,7 @@ public class AutoMapper
 
     private void MapUserDTO()
     {
-        mapper.typeMap(User.class, UserDTO.class);
+        mapper.typeMap(User.class, User.class);
     }
 
 
