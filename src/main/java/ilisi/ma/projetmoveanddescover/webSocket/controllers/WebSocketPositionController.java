@@ -1,9 +1,9 @@
 package ilisi.ma.projetmoveanddescover.webSocket.controllers;
 
-import ilisi.ma.projetmoveanddescover.events.controllers.dto.PositionDTO;
 import ilisi.ma.projetmoveanddescover.events.controllers.dto.PositionReader;
 import ilisi.ma.projetmoveanddescover.events.repository.entities.Position;
 import ilisi.ma.projetmoveanddescover.events.services.EvenementEventHandler;
+import ilisi.ma.projetmoveanddescover.events.services.PositionResponse;
 import ilisi.ma.projetmoveanddescover.webSocket.repositories.EventDistance;
 import ilisi.ma.projetmoveanddescover.webSocket.services.WebSocketPositionService;
 //import lombok.var;
@@ -12,6 +12,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.io.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -19,7 +20,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import  ilisi.ma.projetmoveanddescover.events.controllers.BasicApiController;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,15 @@ public class WebSocketPositionController {
         return webSocketPositionService.distancePosition(basePos,pos);
 
     }
+    @PostMapping("/dist")
+    public PositionResponse getDistanceDB(@RequestBody PositionReader positionReader) throws ParseException {
+        Position pos = positionReader.toPosition();
+        var liste =evenementEventHandler.getAllEventDistance(pos.getPoint(),30);
+        System.out.println(pos.getPoint().toString() +" est la position reçue du front");
+        //template.convertAndSend("/topic/events",liste);
+        return liste;
 
+    }
     @PostMapping("/send")
     public List<EventDistance> receivePositionS(@RequestBody PositionReader positionReader) throws ParseException {
         System.out.println(positionReader +" est la position reçue du front");
@@ -70,6 +79,7 @@ public class WebSocketPositionController {
         return distances;
 
     }
+
     @MessageMapping("/sendMessage")
     public void receivePosition(@Payload PositionReader positionReader) throws ParseException {
         System.out.println(positionReader +" est la position reçue du front");
@@ -93,5 +103,18 @@ public class WebSocketPositionController {
     List<EventDistance> broadcastMessage(@Payload List<EventDistance> distances)
     {
         return distances;
+    }
+    @MessageMapping("/sendEvents")
+    public void getEvents(@Payload PositionReader positionReader) throws ParseException {
+        Position pos = positionReader.toPosition();
+        var liste =evenementEventHandler.getAllEventDistance(pos.getPoint(),1);
+        System.out.println(pos.getPoint().toString() +" est la position reçue du front");
+        template.convertAndSend("/topic/events",liste);
+    }
+    @SendTo("/topic/events")
+    public PositionResponse GetEvenement(@Payload PositionResponse evenementResponse)
+    {
+        return evenementResponse;
+
     }
 }

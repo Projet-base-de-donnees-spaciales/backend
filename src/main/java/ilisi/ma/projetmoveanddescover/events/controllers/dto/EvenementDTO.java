@@ -1,6 +1,7 @@
 package ilisi.ma.projetmoveanddescover.events.controllers.dto;
 
 
+import ilisi.ma.projetmoveanddescover.events.repository.entities.Evenement;
 import ilisi.ma.projetmoveanddescover.user.repository.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +21,18 @@ public class EvenementDTO {
         CategoryDTO categoryDTO;
         User userDTO;
 
+        static EvenementDTO toEvenDTO(Evenement evenement)
+        {
+                return  new EvenementDTO(
+                        evenement.getId(),
+                        evenement.getDescription(),
+                        evenement.getName(),
+                        evenement.getUrl_image(),
+                        evenement.getDate_creation(),
+                        evenement.getDate_expiration(),
+                        CategoryDTO.toDTo(evenement.getCategory()),
+                        evenement.getUser()
+                );
+        }
 
 }

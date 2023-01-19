@@ -1,5 +1,6 @@
 package ilisi.ma.projetmoveanddescover.events.controllers.dto;
 
+import ilisi.ma.projetmoveanddescover.events.repository.entities.Position;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -52,5 +53,15 @@ public class PositionDTO {
 
     public void setEvenementDTO(EvenementDTO evenementDTO) {
         this.evenementDTO = evenementDTO;
+    }
+
+    static public PositionDTO topositionDTO(Position position)
+    {
+        PositionDTO positionDTO =new PositionDTO();
+        positionDTO.setId(position.getId());
+        positionDTO.setPoint(position.getPoint());
+        positionDTO.setEvenementDTO(EvenementDTO.toEvenDTO(position.getEvenement()));
+
+        return positionDTO;
     }
 }

@@ -3,19 +3,17 @@ package ilisi.ma.projetmoveanddescover.user.controllers;
 import ilisi.ma.projetmoveanddescover.events.controllers.BasicApiController;
 import ilisi.ma.projetmoveanddescover.user.controllers.dto.CreatDTO;
 import ilisi.ma.projetmoveanddescover.user.controllers.dto.LoginDTO;
-import ilisi.ma.projetmoveanddescover.user.controllers.dto.UserDTO;
 import ilisi.ma.projetmoveanddescover.user.controllers.mappers.UserControllerMapper;
 import ilisi.ma.projetmoveanddescover.user.repository.entities.User;
 import ilisi.ma.projetmoveanddescover.user.services.UserEventHandler;
 import ilisi.ma.projetmoveanddescover.user.services.UserResponse;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.validation.Valid;
-import lombok.extern.log4j.Log4j2;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
 import java.util.Collection;
 
 @Log4j2

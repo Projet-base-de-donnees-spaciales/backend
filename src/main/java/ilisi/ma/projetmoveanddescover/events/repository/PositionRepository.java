@@ -18,8 +18,8 @@ import java.util.List;
 public interface PositionRepository extends JpaRepository<Position,Long> {
 
     void deleteByEvenement(Evenement evenement);
-
-    @Query(value = "SELECT * from position where ST_Distance(geom, :p) < :dist", nativeQuery = true)
+    List<Position> findByEvenement_User(User user);
+    @Query(value = "SELECT * from position where ST_Distance(point, :p) < :dist", nativeQuery = true)
     List<Position> findDistance(Point p,double dist);
 
 

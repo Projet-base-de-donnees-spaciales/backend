@@ -3,6 +3,7 @@ package ilisi.ma.projetmoveanddescover.events.services;
 import ilisi.ma.projetmoveanddescover.Common.Mapper.AutoMapper;
 import ilisi.ma.projetmoveanddescover.events.controllers.Common.EvenementCommon;
 import ilisi.ma.projetmoveanddescover.events.controllers.dto.PositionDTO;
+import ilisi.ma.projetmoveanddescover.events.controllers.dto.PositionReader;
 import ilisi.ma.projetmoveanddescover.events.repository.CategorieRepository;
 import ilisi.ma.projetmoveanddescover.events.repository.EvenementRepository;
 import ilisi.ma.projetmoveanddescover.events.repository.PositionRepository;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -96,5 +98,14 @@ public class EvenementEventHandler {
        positionResponse.setPositionDTOSList(_Mapper.MapList(positionRepository.findByEvenement_User(user), PositionDTO.class));
        positionResponse.Success("les evenemet du user ");
        return  positionResponse;
+    }
+    public List<Position> getDistances(Point point, double distMini){
+        return positionRepository.findDistance(point,distMini);
+    }
+    public PositionResponse getAllEventDistance(Point point, double distMini){
+        PositionResponse evenementResponse = new PositionResponse();
+        evenementResponse.setPositionDTOSList(_Mapper.MapList(positionRepository.findDistance(point,distMini), PositionDTO.class));
+        evenementResponse.Success("Evenement get with minm distance");
+        return evenementResponse;
     }
 }
