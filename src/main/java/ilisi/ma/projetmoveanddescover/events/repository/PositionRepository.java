@@ -21,6 +21,7 @@ public interface PositionRepository extends JpaRepository<Position,Long> {
 
     @Query(value = "SELECT * from position where ST_Distance(geom, :p) < :dist", nativeQuery = true)
     List<Position> findDistance(Point p,double dist);
+    List<Position> findByEvenement_User(User user);
 
 
 }
